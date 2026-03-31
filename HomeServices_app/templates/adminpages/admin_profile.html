@@ -1,0 +1,88 @@
+{% extends "adminpages/admin_header_footer.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="vh-100" style="background-color: #f4f5f7;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+
+      <div class="col-12 col-md-10 col-lg-8">
+
+        <div class="card shadow-sm" style="border-radius: 1rem; overflow: hidden;">
+
+          <div class="row g-0">
+
+            <!-- LEFT: Profile Picture & Edit -->
+            <div class="col-md-4 bg-softorange text-center d-flex flex-column align-items-center justify-content-center p-4">
+
+              {% if data.profile_pic %}
+                <img src="{{ data.profile_pic.url }}" class="img-fluid rounded-circle mb-3" style="width:140px; height:140px; object-fit: cover; border:4px solid #fff;">
+              {% else %}
+                <img src="{% static 'user_assets/img/default-user.png' %}" class="img-fluid rounded-circle mb-3" style="width:140px; height:140px; object-fit: cover; border:4px solid #fff;">
+              {% endif %}
+
+              <h5 class="mb-1" style="color:#1a1a1a;">{{ data.admin.first_name }} {{ data.admin.last_name }}</h5>
+              <p class="text-muted mb-0">@{{ data.admin.username }}</p>
+
+              <a href="{% url 'admin_edit_profile' %}" class="btn btn-sm btn-outline-dark mt-3">Edit Profile</a>
+
+            </div>
+
+            <!-- RIGHT: Information -->
+            <div class="col-md-8">
+              <div class="card-body p-4">
+
+                <h5 class="card-title mb-3" style="color:#333;">Admin Information</h5>
+                <hr style="border-top: 1px solid #dee2e6;">
+
+                <div class="row mb-2">
+                  <div class="col-5 text-muted">Email:</div>
+                  <div class="col-7" style="color:#555;">{{ data.admin.email }}</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-5 text-muted">Phone:</div>
+                  <div class="col-7" style="color:#555;">{{ data.contact_number }}</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-5 text-muted">Gender:</div>
+                  <div class="col-7" style="color:#555;">{{ data.gender }}</div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-5 text-muted">Address:</div>
+                  <div class="col-7" style="color:#555;">{{ data.address }}</div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+/* Soft accent color for admin profile */
+.bg-softorange {
+    background-color: #ffe5b4; /* soft orange */
+}
+
+/* Card shadow effect */
+.card.shadow-sm {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Button hover */
+.btn-outline-dark:hover {
+    background-color: #333;
+    color: #fff;
+    border-color: #333;
+}
+</style>
+
+{% endblock %}

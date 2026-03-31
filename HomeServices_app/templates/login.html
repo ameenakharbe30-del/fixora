@@ -1,0 +1,139 @@
+<html lang="en">
+    {% load static %}
+
+<!-- login35:56-->
+<head>
+	<!-- Basic Page Needs
+	================================================== -->
+	<title>fixora</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<!-- CSS
+	================================================== -->
+	<link rel="stylesheet" href="/assets/plugins/css/plugins.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom style -->
+<link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'assets/css/colors/green-style.css' %}">
+	<style>
+    body {
+        background-color: #f7f7f7;
+        background-image: url('https://example.com/path/to/your/image.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Center container properly */
+    .container {
+        max-width: 400px;
+        margin: 60px auto;
+        padding: 30px 25px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    h2 {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        height: 45px;
+        font-size: 14px;
+    }
+
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0 0 5px rgba(40, 167, 69, 0.4);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .btn-success {
+        width: 100%;
+        border-radius: 8px;
+        height: 45px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .container span {
+        font-size: 14px;
+    }
+
+    a {
+        color: #28a745;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 576px) {
+        .container {
+            margin: 20px;
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 22px;
+        }
+
+        .btn-success {
+            font-size: 14px;
+        }
+    }
+</style>
+
+
+
+	</head>
+	<body class="simple-bg-screen" style="background-image: url('/assets/img/banner-10.jpg');">
+		<div class="Loader"></div>
+		<div class="wrapper">
+
+			<!-- Title Header Start -->
+			<section class="container mt-5">
+				<div class=" ">
+					<div class="">
+
+						<form method="POST" action="{% url 'login' %}">
+							{% csrf_token %}
+							<h3 style="color:red">{{error_msg}}</h3>
+
+                            <center><h2 class="img-responsive">Login</h2></center>
+							<input type="text" class="form-control form-group" placeholder="Useraname" name="uname" id="uname" required>
+							<input type="password" class="form-control form-group" placeholder="Password" name="psw" id="psw" required>
+							<button class="btn btn-success " type="submit">Login</button><br>
+							<div class="container mt-3">
+								<br>
+							<span><a href="{% url 'password-reset' %}"> Forget Password</a></span><br><br>
+							<span>Dont Have accout ? <a href="{% url 'user_registration' %}">Register As user</a><br> Or<br><a href="{% url 'Worker_Register' %}">Register as Worker</a> </span>
+							</div>
+						</form>
+					</div>
+				</div>
+			</section>
+
+
+        </div>
+    </body>
+</html>

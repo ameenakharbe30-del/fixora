@@ -1,0 +1,144 @@
+{% extends "adminpages/admin_header_footer.html" %}
+
+{% block content %}
+{% load static %}
+
+<div class="content" style="padding:20px;">
+
+    <!-- Dashboard Cards -->
+    <div class="dashboard-grid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px;">
+
+        <!-- Finished Requests -->
+        <a href="{% url 'admin_completed_requests' %}" class="stat-card stat-success">
+            <i class="pe-7s-cash stat-icon"></i>
+            <div class="stat-number">{{completed_requests}}</div>
+            <div class="stat-label">Total Request Finished</div>
+        </a>
+
+        <!-- Pending Requests -->
+        <a href="{% url 'admin_pending_requests' %}" class="stat-card stat-warning">
+            <i class="pe-7s-cart stat-icon"></i>
+            <div class="stat-number">{{pending_requests}}</div>
+            <div class="stat-label">Pending</div>
+        </a>
+
+        <!-- Total Requests -->
+        <a href="{% url 'ViewRequests' %}" class="stat-card stat-primary">
+            <i class="pe-7s-browser stat-icon"></i>
+            <div class="stat-number">{{total_requests}}</div>
+            <div class="stat-label">Total Requests</div>
+        </a>
+
+        <!-- Clients -->
+        <a href="{% url 'manageusers' %}" class="stat-card stat-danger">
+            <i class="pe-7s-users stat-icon"></i>
+            <div class="stat-number">{{total_users}}</div>
+            <div class="stat-label">Clients</div>
+        </a>
+
+    </div>
+
+    <!-- Requests Summary -->
+    <div class="card" style="padding:20px; border-radius:15px; margin-top:30px;">
+        <h5 style="margin-bottom:20px;">Requests Summary</h5>
+
+        <!-- Completed -->
+        <div style="margin-bottom:15px;">
+            <div style="display:flex; justify-content:space-between;">
+                <span>Completed</span>
+                <span>{{completed_requests}}</span>
+            </div>
+            <div style="background:#eee; border-radius:10px; height:10px;">
+                <div style="width: {% widthratio completed_requests total_requests 100 %}%; background:#00b894; height:10px; border-radius:10px;"></div>
+            </div>
+        </div>
+
+        <!-- Pending -->
+        <div style="margin-bottom:15px;">
+            <div style="display:flex; justify-content:space-between;">
+                <span>Pending</span>
+                <span>{{pending_requests}}</span>
+            </div>
+            <div style="background:#eee; border-radius:10px; height:10px;">
+                <div style="width: {% widthratio pending_requests total_requests 100 %}%; background:#fdcb6e; height:10px; border-radius:10px;"></div>
+            </div>
+        </div>
+
+        <!-- Total -->
+        <div>
+            <div style="display:flex; justify-content:space-between;">
+                <span>Total</span>
+                <span>{{total_requests}}</span>
+            </div>
+            <div style="background:#eee; border-radius:10px; height:10px;">
+                <div style="width:100%; background:#6c5ce7; height:10px; border-radius:10px;"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="row" style="margin-top:30px;">
+        <div class="col-12">
+            <div class="card p-4" style="border-radius:15px;">
+                <h4>Welcome, {{request.user}} 👋</h4>
+                <p style="color:#777;">Here’s what’s happening in your system today.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Styles -->
+<style>
+    /* Cards grid */
+    .dashboard-grid a.stat-card {
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        padding:20px;
+        border-radius:15px;
+        color:#fff;
+        text-decoration:none;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .dashboard-grid a.stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Card colors */
+    .stat-success { background:#00b894; }
+    .stat-warning { background:#fdcb6e; color:#000; }
+    .stat-primary { background:#6c5ce7; }
+    .stat-danger { background:#d63031; }
+
+    /* Icon */
+    .stat-icon {
+        font-size:40px;
+        margin-bottom:10px;
+        opacity:0.9;
+    }
+
+    /* Number & Label */
+    .stat-number {
+        font-size:24px;
+        font-weight:bold;
+    }
+
+    .stat-label {
+        font-size:14px;
+        opacity:0.9;
+    }
+
+    /* Card inside requests summary */
+    .card {
+        background:#fff;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+</style>
+
+{% endblock %}

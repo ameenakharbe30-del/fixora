@@ -1,0 +1,84 @@
+{% extends "adminpages/admin_header_footer.html" %}
+{% load static %}
+{% block content %}
+<div class="container mt-5 p-4" style="background-color: rgba(255, 255, 255, 0.9); border-radius: 10px; box-shadow: 0px 2px 5px rgba(0,0,0,0.1);">
+    <h2 class="text-center text-primary mb-4">Assign Worker for {{ req.service.Name }}</h2>
+    {{ msg }}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Requested Service:</label>
+                <input type="text" class="form-control" value="{{ req.service.Name }}" readonly>
+                <input type="hidden" name="service_id" value="{{ req.service.id }}">
+            </div>
+            <div class="col-md-6">
+                <label>User:</label>
+                <input type="text" class="form-control" value="{{ req.user.admin.first_name }}" readonly>
+                <input type="hidden" name="user_id" value="{{ req.user.admin.id }}">
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label>Problem Description:</label>
+            <textarea class="form-control" rows="4" readonly>{{ req.Problem_Description }}</textarea>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+<label>Assign a Worker:</label>
+<select class="form-control" name="assigned_worker" required>
+    <option value="">Select Worker</option>
+    {% for records in workers_records %}
+        <option value="{{ records.id }}">
+            {{ records.admin.first_name }} - {{ records.designation }}
+        </option>
+    {% endfor %}
+</select>
+            </div>
+            <div class="col-md-6">
+                <label>Contact:</label>
+                <input type="text" class="form-control" value="{{ req.contact }}" readonly>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>House No:</label>
+                <input type="text" class="form-control" value="{{ req.House_No }}" readonly>
+            </div>
+            <div class="col-md-6">
+                <label>Address:</label>
+                <input type="text" class="form-control" value="{{ req.Address }}" readonly>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label>Pincode:</label>
+                <input type="text" class="form-control" value="{{ req.pin }}" readonly>
+            </div>
+            <div class="col-md-6">
+                <label>City:</label>
+                <input type="text" class="form-control" value="{{ req.city.name }}" readonly>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Assign Worker</button>
+    </form>
+</div>
+
+<style>
+    .form-control:focus {
+        border-color: #4285f4;
+        box-shadow: 0 0 0 0.2rem rgba(66, 133, 244, 0.25);
+    }
+    label {
+        font-weight: bold;
+        color: #555;
+    }
+    h2 {
+        text-transform: uppercase;
+    }
+</style>
+{% endblock %}

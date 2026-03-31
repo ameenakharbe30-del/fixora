@@ -1,0 +1,179 @@
+{% extends "userpages/user_header_footer.html" %}
+{% block content %}
+{% load static %}
+
+<style>
+    .progress-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin: 15px 0;
+}
+
+.progress-container::before {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #e0e0e0;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.progress-step {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    width: 33%;
+}
+
+.progress-step .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #dcdcdc;
+    color: white;
+    line-height: 30px;
+    font-size: 14px;
+    margin: auto;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.progress-step.active .circle {
+    background: #c49b63;
+}
+
+.progress-step .label {
+    font-size: 12px;
+    margin-top: 6px;
+    color: #555;
+    font-weight: 500;
+}
+
+
+    body {
+        background: #f4f6f9;
+    }
+
+    h2 {
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    h5 {
+        font-weight: 600;
+        color: #444;
+        margin-top: 30px;
+    }
+
+    .premium-card {
+        background: #ffffff;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+        transition: 0.3s;
+        border-left: 5px solid #c49b63;
+    }
+
+    .premium-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .service-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #222;
+    }
+
+    .info-text {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+    }
+
+    .pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .completed {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .action-btn {
+        border-radius: 20px;
+        padding: 5px 15px;
+        font-size: 13px;
+    }
+
+    .section-box {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        margin-bottom: 30px;
+    }
+</style>
+
+
+
+
+
+
+    <!-- RESPONSE DATA -->
+    <div class="section-box">
+        <h5>Track Your Service</h5>
+
+        {% for response in responses %}
+        <div class="premium-card">
+
+            <div class="service-title">
+                {{ response.requests.service.Name }}
+            </div>
+
+            <div class="info-text">
+                📅 Requested: {{ response.requests.dateofrequest|date:"Y-m-d" }}
+            </div>
+
+            <div class="info-text">
+                🛠 Service Date: {{ response.Date|date:"Y-m-d" }}
+            </div>
+
+            <div class="info-text">
+                👨‍🔧 Worker: {{ response.assigned_worker.admin.first_name }}
+            </div>
+
+            <div class="info-text">
+                👤 User: {{ response.requests.user.admin.first_name }}
+            </div>
+
+            <div class="mt-2">
+                {% if response.status == True %}
+                    <span class="status-badge completed">Completed</span>
+                {% else %}
+                    <span class="status-badge pending">Pending</span>
+                {% endif %}
+            </div>
+
+        </div>
+        {% empty %}
+        <p>No service updates yet</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

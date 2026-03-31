@@ -1,0 +1,106 @@
+{% extends "workerpages/worker_header_footer.html" %}
+{% load static %}
+
+{% block content %}
+<section class="vh-100" style="background-color: #f4f5f7;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-10 col-lg-6">
+
+        <div class="card" style="border-radius: .5rem; background-color: #a1f6ff;">
+          <div class="row g-0">
+
+            <!-- LEFT SIDE: Avatar & Basic Info -->
+            <div class="col-md-4 text-center p-3">
+              {% if data.profile_pic %}
+                <img src="{{ data.profile_pic.url }}" class="img-fluid my-4 rounded-circle" style="width: 120px;">
+              {% else %}
+                <img src="{% static 'user_assets/img/default-user.png' %}" class="img-fluid my-4 rounded-circle" style="width: 120px;">
+              {% endif %}
+              <h5 style="color: #2c7a7b;">{{ data.admin.first_name }} {{ data.admin.last_name }}</h5>
+              <p style="color: black;">{{ data.designation }}</p>
+            </div>
+
+            <!-- RIGHT SIDE: Editable Info & Save -->
+            <div class="col-md-8">
+              <div class="card-body p-4">
+
+                <h6>Profile Information</h6>
+                <hr class="mt-0 mb-4">
+
+
+
+
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>First Name</label>
+    <input type="text" value="{{ data.admin.first_name }}" readonly class="form-readonly">
+
+    <label>Last Name</label>
+    <input type="text" value="{{ data.admin.last_name }}" readonly class="form-readonly">
+
+    <label>Email</label>
+    <input type="email" value="{{ data.admin.email }}" readonly class="form-readonly">
+
+    <label>Contact Number</label>
+    <input type="text" name="contact_number" value="{{ data.contact_number }}">
+
+    <label>Address</label>
+    <input type="text" name="address" value="{{ data.address }}">
+
+    <label>Profile Picture</label>
+    <input type="file" name="profile_pic">
+
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+</form>
+
+<style>
+    .form-readonly {
+        background-color: #f0f0f0;  /* light grey */
+        color: #555;                /* slightly dim text */
+        border: 1px solid #ccc;
+        cursor: not-allowed;
+    }
+
+    input[type="text"], input[type="email"], input[type="file"] {
+        width: 100%;
+        padding: 8px 12px;
+        margin-bottom: 12px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #2c7a7b;
+        color: white;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #215959;
+    }
+</style>
+
+
+
+
+
+
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

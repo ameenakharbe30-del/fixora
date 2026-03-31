@@ -1,0 +1,202 @@
+{% extends "userpages/user_header_footer.html" %}
+{% block content %}
+{% load static %}
+
+
+
+
+
+<style>
+
+.page-header {
+   background: url("https://images.unsplash.com/photo-1581578731548-c64695cc6952") center/cover no-repeat;
+    height: 350px;
+    position: relative;
+}
+
+
+
+.contact-info-box {
+    background: linear-gradient(135deg, #1f2937, #111827);
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.contact-form-box {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.info-item .icon {
+    font-size: 20px;
+    margin-right: 15px;
+}
+
+.custom-input {
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    transition: 0.3s;
+}
+
+.custom-input:focus {
+    border-color: #c49b63;
+    box-shadow: 0 0 0 0.2rem rgba(196,155,99,0.2);
+}
+
+.btn-premium {
+    background: #6366c4;
+    color: white;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+
+
+.map-box iframe {
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+</style>
+    <!-- Topbar Start -->
+    
+    <!-- Navbar End -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5">
+        <div class="container py-5">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Contact</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="{% url 'index' %}">Home</a></li>
+                    <!-- <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li> -->
+                    <li class="breadcrumb-item text-white active" aria-current="page">Contact</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+
+
+
+
+
+
+
+
+
+    <!-- Contact Start -->
+    <div class="container py-5">
+
+    <div class="row g-4">
+
+        <!-- LEFT: CONTACT INFO -->
+        <div class="col-lg-5">
+            <div class="contact-info-box p-4 h-100">
+
+                <h3 class="mb-4">Get in Touch</h3>
+                <p class="text-muted">
+                    Have questions or need help? Reach out to us anytime. We're here to assist you.
+                </p>
+
+                <div class="info-item mt-4">
+                    <div class="icon">📍</div>
+                    <div>
+                        <h6>Location</h6>
+                        <p>Bhiwandi, India</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="icon">📧</div>
+                    <div>
+                        <h6>Email</h6>
+                        <p>fixora355@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="icon">📞</div>
+                    <div>
+                        <h6>Phone</h6>
+                        <p>+91 9876543210</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- RIGHT: FORM -->
+        <div class="col-lg-7">
+            <div class="contact-form-box p-4">
+
+                <h3 class="mb-4">Send a Message</h3>
+
+                <form>
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <input type="text" class="form-control custom-input" placeholder="Your Name">
+                        </div>
+
+                        <div class="col-md-6">
+                            <input type="email" class="form-control custom-input" placeholder="Your Email">
+                        </div>
+
+                        <div class="col-12">
+                            <input type="text" class="form-control custom-input" placeholder="Subject">
+                        </div>
+
+                        <div class="col-12">
+                            <textarea class="form-control custom-input" rows="5" placeholder="Your Message"></textarea>
+                        </div>
+
+                        <div class="col-12">
+                            <button class="btn btn-premium w-100 py-3">
+                                Send Message 🚀
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- MAP -->
+    <div class="map-box mt-5">
+        <iframe 
+            src="https://maps.google.com/maps?q=Bhiwandi%20India&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            width="100%" height="350" style="border:0;" loading="lazy">
+        </iframe>
+    </div>
+
+</div>
+                       
+                       
+                       
+                       
+                       
+                       
+    
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+
+    <!-- Footer Start -->
+    {% endblock %}

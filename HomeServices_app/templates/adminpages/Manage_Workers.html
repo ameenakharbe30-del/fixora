@@ -1,0 +1,137 @@
+{% extends "adminpages/admin_header_footer.html" %}
+{% load static %}
+{% block content %}
+
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Manage Workers</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="{% url 'admmin_home' %}">Admin</a></li>
+                            <li><a href="{% url 'admmin_home' %}">Dashboard</a></li>
+                            <li class="active">Workers Data</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Data Table</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <table id="bootstrap-data-table" class="table table-responsive-md table-striped table-bordered" cellspacing="0" width="100%">
+                            
+                            <thead>
+                                <tr>
+                                    <th>Profile Pic</th>
+                                    <th>Name</th>
+                                    <th>Designation</th>
+                                    <th>Email</th>
+                                    <th>Gender</th>
+                                    <th>Contact No</th>
+                                    <th>Aadhaar</th>
+                                    <th>City</th>
+                                    <th>Address</th>
+                                    <th>Availability</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {% for records in workers_records %}
+                                <tr>
+
+                                    <td>
+                                        <div class="round-img" style="border-radius:25%">
+                                            <img class="rounded-circle" src="{{records.profile_pic.url}}" alt="" style="max-width: 50%;">
+                                        </div>
+                                    </td>
+
+                                    <td>{{records.admin.first_name}} {{records.admin.last_name}}</td>
+                                    <td>{{records.designation}}</td>
+                                    <td>{{records.admin.email}}</td>
+                                    <td>{{records.gender}}</td>
+                                    <td>{{records.contact_number}}</td>
+                                    <td>
+    {% if records.aadhar_card %}
+        <a href="{{ records.aadhar_card.url }}" target="_blank" class="btn btn-info btn-sm">
+            View
+        </a>
+    {% else %}
+        Not Uploaded
+    {% endif %}
+</td>
+                                    <td>{{records.city}}</td>
+                                    <td>{{records.address}}</td>
+                                    <td>{{records.avalability_status}}</td>
+
+                                    <td>
+    {% if records.acc_activation %}
+        <span class="badge badge-success">Verified ✔️</span>
+
+    {% elif records.aadhar_card %}
+        <a href="{% url 'verify_worker' 'active' records.id %}" 
+           class="btn btn-primary btn-sm"
+           onclick="return confirm('Have you checked Aadhaar?')">
+            Verified
+        </a>
+
+    {% else %}
+        <span class="text-danger">No Aadhaar ❌</span>
+    {% endif %}
+
+                                        {% if records.avalability_status %}
+                                            <a href="{% url 'verify_worker' 'deactivate' records.id %}" class="btn btn-warning btn-sm">Deactivate</a>
+                                        {% else %}
+                                            <a href="{% url 'verify_worker' 'activate' records.id %}" class="btn btn-success btn-sm">Activate</a>
+                                        {% endif %}
+
+                                        <a href="{% url 'verify_worker' 'delete' records.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- DataTable Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#bootstrap-data-table').DataTable();
+    });
+</script>
+
+{% endblock %}

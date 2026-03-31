@@ -1,0 +1,28 @@
+{% extends "adminpages/admin_header_footer.html" %}
+
+{% block content %}
+
+<h2>Contact Messages</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Message</th>
+        <th>Date</th>
+    </tr>
+
+    {% for c in contacts %}
+    <tr>
+        <td>{{ c.name }}</td>
+        <td>{{ c.email }}</td>
+        <td>{{ c.subject }}</td>
+        <td>{{ c.message }}</td>
+        <td>{{ c.created_at }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

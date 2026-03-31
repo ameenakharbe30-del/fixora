@@ -1,0 +1,49 @@
+{% extends "adminpages/admin_header_footer.html" %}
+
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>Edit Profile</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="text" name="first_name" value="{{ data.admin.first_name }}" placeholder="First Name" class="form-control mb-2">
+        <input type="text" name="last_name" value="{{ data.admin.last_name }}" placeholder="Last Name" class="form-control mb-2">
+        <input type="email" name="email" value="{{ data.admin.email }}" placeholder="Email" class="form-control mb-2">
+        <input type="text" name="contact_number" value="{{ data.contact_number }}" placeholder="Phone" class="form-control mb-2">
+
+
+
+
+        <select name="gender" class="form-control mb-2">
+    <option value="">Select Gender</option>
+    <option value="Male" {% if data.gender == "Male" %}selected{% endif %}>Male</option>
+    <option value="Female" {% if data.gender == "Female" %}selected{% endif %}>Female</option>
+</select>
+
+<textarea name="address" class="form-control mb-2" placeholder="Address">{{ data.address }}</textarea>
+
+
+{% if data.profile_pic %}
+    <img src="{{ data.profile_pic.url }}" width="100" class="mb-2">
+{% endif %}
+
+        <input type="file" name="profile_pic" class="form-control mb-3">
+
+
+
+
+
+<button type="submit" class="btn btn-success"
+    onclick="this.disabled=true; this.innerText='Updating...'; this.form.submit();">
+    Update Profile
+</button>
+
+
+
+    </form>
+</div>
+
+{% endblock %}

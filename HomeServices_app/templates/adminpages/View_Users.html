@@ -1,0 +1,117 @@
+{% extends "adminpages/admin_header_footer.html" %}
+{% load static %}
+{% block content %}
+<div class="breadcrumbs">
+    <div class="breadcrumbs-inner">
+        <div class="row m-0">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Manage Users</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li><a href="{% url 'admmin_home' %}">Admin</a></li>
+                            <li><a href="{% url 'admmin_home' %}">Dashboard</a></li>
+                            <li class="active">Users Data</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <strong class="card-title">Users Data</strong>
+                    </div>
+                    <div class="card-body">
+
+                        <table id="bootstrap-data-table" class="table table-responsive-md table-striped table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Profile Pic</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Gender</th>
+                                    <th>Contact No</th>
+                                    <th>Address</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for records in users %}
+                                <tr>
+
+                                    <!-- ✅ Profile Image -->
+                                    <td>
+                                        {% if records.profile_pic %}
+                                            <img src="{{ records.profile_pic.url }}" width="50" height="50" style="border-radius:50%;">
+                                        {% else %}
+                                            <img src="{% static 'user_assets/img/default-user.png' %}" width="50" height="50" style="border-radius:50%;">
+                                        {% endif %}
+                                    </td>
+
+                                    <!-- ✅ Name -->
+                                    <td>{{ records.admin.first_name }} {{ records.admin.last_name }}</td>
+
+                                    <!-- ✅ Other Data -->
+                                    <td>{{ records.admin.email }}</td>
+                                    <td>{{ records.gender }}</td>
+                                    <td>{{ records.contact_number }}</td>
+                                    <td>{{ records.address }}</td>
+
+                                    <!-- ✅ Actions -->
+    <td>
+    <!-- VERIFY BUTTON -->
+    <a href="{% url 'verify_user' records.id %}" class="btn btn-primary btn-sm">
+        {% if records.is_verified %}Verified{% else %}Verify{% endif %}
+    </a>
+
+    <!-- ACTIVATE / DEACTIVATE -->
+    <a href="{% url 'toggle_user' records.id %}" class="btn btn-success btn-sm">
+        {% if records.admin.is_active %}Deactivate{% else %}Activate{% endif %}
+    </a>
+
+    <!-- DELETE -->
+    <a href="{% url 'delete_user' records.id %}" class="btn btn-danger btn-sm"
+       onclick="return confirm('Are you sure you want to delete this user?')">
+        Delete
+    </a>
+</td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#bootstrap-data-table').DataTable();
+    });
+</script>
+
+{% endblock %}
