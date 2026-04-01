@@ -62,7 +62,7 @@
                     </div>
 
                     <div class="col-md-6 mb-2">
-                        <select name="city" class="form-control">
+                        <select name="city" class="form-control" required>
                             <option value="">Select city</option>
                             {% for c in cities %}
                             <option value="{{ c.id }}">{{ c.name }}</option>

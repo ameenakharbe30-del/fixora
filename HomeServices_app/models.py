@@ -62,8 +62,27 @@ class ServiceRequests(models.Model):
     House_No = models.CharField(max_length=20)
     landmark = models.TextField(null=True)
     contact=models.CharField(max_length=200)
-    status=models.BooleanField(default=False)
+    
+    status = models.CharField(
+        max_length=20,
+        choices=[
+            ('pending', 'Pending'),
+            ('assigned', 'Assigned'),
+            ('completed', 'Completed'),
+            ('cancelled', 'Cancelled'),
+        ],
+        default='pending'
+    )
+
+    
+
+
+
+    
     dateofrequest=models.DateTimeField(auto_now_add=True)
+
+
+
 
 class Response(models.Model):
     requests=models.ForeignKey(ServiceRequests,on_delete=models.CASCADE)

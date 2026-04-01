@@ -326,6 +326,11 @@ class bookservice(LoginRequiredMixin, View):
         house_no = request.POST.get('House_No')
         landmark = request.POST.get('landmark')
         contact = request.POST.get('contact')
+  
+         
+
+
+
 
         # Create a new ServiceRequests instance and save it
         service_request = ServiceRequests(
@@ -338,6 +343,7 @@ class bookservice(LoginRequiredMixin, View):
             House_No=house_no,
             landmark=landmark,
             contact=contact,
+            status='pending'
         )
         service_request.save()
 
@@ -612,12 +618,7 @@ class ManageServices(LoginRequiredMixin, View):
         return render(request,'adminpages/Manage_Services.html',context)
     
 
-        # form = ServiceCatogoryForm(request.POST,request.FILES)
-        # if form.is_valid():
-        #     form.save()
-        #     return HttpResponse("Ok")
-        # else:
-        #     return HttpResponse('wrong')
+    
 
 class DeleteServices(LoginRequiredMixin, View):
     login_url = common_lib.DEFAULT_REDIRECT_PATH['ROOT']
@@ -651,12 +652,27 @@ class EditServices(LoginRequiredMixin, View):
         service.save()
         return HttpResponse("Update Successful")
     
+
+
+    
 class feedback_form(LoginRequiredMixin, View):
     login_url = common_lib.DEFAULT_REDIRECT_PATH['ROOT']
 
-    def get(self,request):
-        worker = workers.objects.all()
-        return render(request, 'userpages/feedback_form.html', {'workers': worker})
+    def get(self, request):
+        current_user = request.user
+        user_obj = users.objects.get(admin=current_user)
+
+       
+        worker_list = workers.objects.filter(
+            response__requests__user=user_obj,
+            response__status=True
+        ).distinct()
+
+        print("Workers:", worker_list)  
+
+        return render(request, 'userpages/feedback_form.html', {
+            'workers': worker_list
+        })
 
     def post(self,request):
         rating = int(request.POST['rating'])
@@ -676,9 +692,9 @@ class feedback_form(LoginRequiredMixin, View):
 
         
         messages.success(request, "Thanks for your feedback!")
-
-        
         return redirect('index')   
+    
+    
     
 
 class viewfeedbacks(LoginRequiredMixin, View):
@@ -689,6 +705,7 @@ class viewfeedbacks(LoginRequiredMixin, View):
             'feedback_records':feedback_records,
         }
         return render(request,'adminpages/View_feedbacks.html',context)
+    
 
 class ViewRequests(LoginRequiredMixin, View):
     login_url = common_lib.DEFAULT_REDIRECT_PATH['ROOT']
@@ -763,8 +780,8 @@ class acceptrequest(LoginRequiredMixin, View):
     def get(self,request,action,id):
         request_records=ServiceRequests.objects.get(id=id)
         
-        if action == 'accept' and request_records.status == False:
-            ServiceRequests.objects.filter(id=id).update(status=True)
+        if action == 'accept' and request_records.status == 'pending':
+            ServiceRequests.objects.filter(id=id).update(status='assigned')
             assigned_worker=request.user
             # worker_id=User.objects.get(username=assigned_worker)
             userid = request.user.id
@@ -772,7 +789,7 @@ class acceptrequest(LoginRequiredMixin, View):
             response=Response.objects.create(requests=request_records,assigned_worker=worker_id,status=False)
             return HttpResponseRedirect('/WorkerViewRequests')
         
-        elif action == 'reject' and request_records.status == True:
+        elif action == 'reject' and request_records.status == 'assigned':
             ServiceRequests.objects.filter(id=id).update(status=False)
             response=Response.objects.get(requests=request_records)
             response.delete()
@@ -891,7 +908,7 @@ class AssignWorker(LoginRequiredMixin, View):
 
         # Update the ServiceRequest to mark it as assigned
         req.worker = assigned_worker 
-        req.status = True
+        req.status = 'assigned'
         req.save()
 
         # Create a Response entry
@@ -1069,10 +1086,8 @@ class AdminCompletedRequests(LoginRequiredMixin, View):
 
 
 
-from django.views import View
-from django.shortcuts import render, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import users
+
 from .forms import UserProfileForm
 
 class edit_admin_profile(LoginRequiredMixin, View):
