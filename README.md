@@ -96,3 +96,44 @@ cd fixora
 
 
 
+
+
+
+## 📸 Screenshots
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+### Booking Page
+![Booking Page](screenshots/booking.png)
+
+### Contact Page
+![Contact Page](screenshots/contact-page.png)
+
+### User Profile
+![User Profile](screenshots/profile-page.png)
+
+### Service Page
+![Service Page](screenshots/servicepage.png)
+
+### User Homepage
+![User Homepage](screenshots/user-homepage.png)
+
+### User Login
+![User Login](screenshots/user-login.png)
+
+### User Registration
+![User Registration](screenshots/user-registration.png)
+
+### Worker Dashboard
+![Worker Dashboard](screenshots/worker-dashboard.png)
+
+### Worker Registration
+![Worker Registration](screenshots/worker-registration.png)
+
+
+
+
+
+
+
